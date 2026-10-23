@@ -1,16 +1,18 @@
 import { buscarUsuario } from "../models/UsuarioModel.js";
 import { generalAlert } from "../helpers/alerts.js";
-
+import { setLocalStorage } from "../helpers/local-storage.js";
 
 function iniciarSesion() {
     let correo = document.getElementById('correo').value;
     let contrasena = document.getElementById('clave').value;
     let auth = buscarUsuario(correo, contrasena)
     if (auth) {
-        generalAlert('Bienvenido al sistema','Sera redireccionado al catalogo de cosas', 'succes')
+        setLocalStorage('usuario', auth) 
+        generalAlert('Bienvenido al sistema','Sera redireccionado al catalogo de cosas', 'success')
         setTimeout(()=>{
             return window.location.href = "/views/pages/cosas-view-catalogo.html"
-        }, 3000)
+        }, 2000)
+        return
         
     }
     generalAlert('Error', 'Usuario y/o contraseña incorrectos', 'error')
@@ -20,4 +22,3 @@ function iniciarSesion() {
     
 }
 
-document.getElementById("btn-login").addEventListener('click', iniciarSesion)
